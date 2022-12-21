@@ -1,0 +1,10 @@
+name: prof_dev_notes
+channels:
+  - anaconda
+  - conda-forge
+  - defaults
+dependencies:
+  - pandas
+  - jupyter
+  - numpy
+  - rpy2
