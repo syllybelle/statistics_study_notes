@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "docsify-cli": "^1.0.0",
+    "docsify-katex": "^2.0.2"
+  },
+  "name": "statistics_study_notes",
+  "description": "Course notes for an intermediate statistics course, packaged as a docsified .md notebook for additional learning around  documentation. I am a python person: I have about zero experience with R, and am experimenting with trying to use it in a standard python jupyter notebook. I have approximately 1 experience with npm; i don't know how to use package.json files - I installed npm and docsify globally",
+  "version": "1.0.0",
+  "main": ".notebook/index.html",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/syllybelle/statistics_study_notes.git"
+  },
+  "keywords": [
+    "statistics"
+  ],
+  "author": "syllybelle",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/syllybelle/statistics_study_notes/issues"
+  },
+  "homepage": "https://github.com/syllybelle/statistics_study_notes#readme"
+}

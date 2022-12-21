@@ -1,10 +1,8 @@
-#### Course notes from  
-#### *University of Colorado Boulder*  
+#### Course notes
 # Probability Theory: Foundation for Data Science  
   
 
-?> [Course material](https://www.coursera.org/learn/probability-theory-foundation-for-data-science/lecture/iWkGR/intro-to-probability)  
-[Textbook](https://bookdown.org/probability/beta/)  
+?> [Textbook](https://bookdown.org/probability/beta/)  
 
 
 <hr/> 
