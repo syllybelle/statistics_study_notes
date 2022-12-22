@@ -1,9 +1,17 @@
 #### Course notes
+#### University of Colorado Boulder
 # Probability Theory: Foundation for Data Science  
   
 
-?> [Textbook](https://bookdown.org/probability/beta/)  
+<hr/>
 
+?> [coursera course](https://www.coursera.org/learn/probability-theory-foundation-for-data-science/)
+[Textbook](https://bookdown.org/probability/beta/)  
+
+** my understanding of Coursera's [acceptable use policy](https://www.coursera.org/about/terms#acceptable-use-policy) 
+is that personal notes are fine to share, as long as it is not lifting the content.
+As this is an amalgamation of the textbook the course, and my own interpretations, as far as I am aware I am not violating the copywrite
+of either the textbook or the Coursera course, but if anyone knows otherwise, please flag it as an issue.**
 
 <hr/> 
 
