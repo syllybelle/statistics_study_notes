@@ -29,6 +29,40 @@
   naive probability  
   $P(A|B) = \frac {P(A \cap B)}{P(B)}$ **NB: do not confuse symbols '|' ('given') and '$\cup$' ('or')))**
 - `assumed equivalence`: `$A:=B$ assuming/given that/when A is equivalent to B
+- `marginal probability`: Marginal probability is the probability of an event irrespective of the outcome of another
+  variable.
+
+
+<details>
+  <summary> A summary, to clarify the shape of things, etc </summary>
+
+just because I lost a lot of time being very confused about this
+An event/outcome is often seen referred to both as a single object as part of a larger sample space, but also as a set itself, 
+containing observations.  
+
+Consider:
+50 of 100 people drive to work (A), 25/100 get coffee before work (B), 10/100 do both ($A \cap B$).
+
+This is how the venn diagram number would look:
+A only = (50-10)   
+B only = (15-10)  
+both = 10
+(neither = 45)
+The numbers refer to the observations. in this way, these events are seen as sets containing observations, each set partitioning the sample space of possible outcomes.
+
+but the venn diagram itself is a set containing all possible outcome combinations.
+we have a new sample space of all possible outcomes (this maps to the segments in the venn diagram)
+but when looking at probabilities, we can then look at all possible combinations of these events occuring, for example, 
+the probability of people driving to work (whether or not they get coffee)
+the probability of people driving to work or getting coffee, but not both.
+Now we have a new space of all possible combinations of outcomes (these are often coin flipping examples),
+Now, with the 4 compartments of the venn diagram (A only, B only, both A and B, neither), we have 24 different combinations of outcomes
+And this can fuck right off.
+
+</details>
+
+<br>
+
 
 ## Axioms & conventions
 
@@ -155,6 +189,9 @@ Probability that A occurs given that B occurs: $P(A|B)=\frac{P(A \cap B)}{P(B)}$
       $$ P(S) = P(A \cap B^{c}) + P(A \cap B) + P(A^{c} \cap B^{c}) + P(A^{c} \cap B) $$
       $$ 1 = P(A)⋅P(B^{c})  + P(A)⋅P(B) + P(A^{c})⋅P(B^{c}) + P(A^{c})⋅P(B) $$
 
+- the `marginal probability` refers to the probability of an event occuring independent of other outcomes, and is the sum
+  of the conditional probabilities. (I refer to the marginal probability as the global probability sometimes)  
+
 <br>
 
 <details>
@@ -210,37 +247,42 @@ $$P(A|B) = \frac {P(B|A)⋅P(A)}{P(B)} = \frac {P(A \cap B)}{P(B|A) ⋅ P(A) + P
 
 > What is the probability that A occured (sam went along), given that B occured (frodo arrived)?  
 > Known:
-> - $P(B|A) = .9$: the relative probability of frodo arriving, given that sam came  
-> - $P(B|A^(C)) = .1$ the relative probability of frodo arriving, given that sam did not come 
+> - $P(B|A) = .9$: the relative probability of frodo arriving, given that sam came
+> - $P(B|A^(C)) = .1$ the relative probability of frodo arriving, given that sam did not come
 > - $P(A) = 0.8$ the overall probability that sam comes
 > - $P(A^(C)) = 0.2$ the overall probability that sam does not come (summing of partitions)
-> solve P(A|B)
+    > solve P(A|B)
 >
 > P(sam coming given that frodo arrived) is the overall probability that both frodo arrived and sam came, dividing
 > out the probability that frodo did not arrive (removing those outcomes from the sample space).
 > $$P(A|B) = \frac{P(B \cap A)}{P(B)}$$  
 > However, we do not have either of those terms.  
-> To calculate the numerator $\frac{P(B \cap A)} (multiplication rule)$:  
+> To calculate the numerator $\frac{P(B \cap A)} (multiplication rule)$:
 > - The global probability that both sam and frodo arrived is the probability of frodo arriving if sam comes, modified
-    by the global likelihood of sam coming  
+    by the global likelihood of sam coming
 >
 > > $P(B \cap A) = P(B|A) ⋅ P(A) = 0.9 ⋅ 0.8$ such that $P(A|B)= P(0.9 ⋅ 0.8) = 0.72$  
-> To calculate the denominator $P(B)$ (law of total probability):  
-> - The global probability of frodo arriving is the probability of  
->   - frodo arriving when sam does not come, weighted by the probability of sam coming,  
+> To calculate the denominator $P(B)$ (law of total probability):
+> - The global probability of frodo arriving is the probability of
+    >
+- frodo arriving when sam does not come, weighted by the probability of sam coming,
 >   - plus the probability of frodo arriving weighted by the probability of sam not coming
-> 
-> > $(B) = P(B|A) ⋅ P(A) + P(B|A^{c}) ⋅ P(A^{c}) = 0.9 ⋅ 0.8 + 0.1 ⋅ 0.2 = 0.74$  
->   
+>
+> > $(B) = P(B|A) ⋅ P(A) + P(B|A^{c}) ⋅ P(A^{c}) = 0.9 ⋅ 0.8 + 0.1 ⋅ 0.2 = 0.74$
+>
 > $$P(A|B)= \frac {0.72}{0.74} = 0.97$$  
 > There is a 0.97 chance that sam has come with
-> 
+>
 
 </details>
 
 ### Inclusion/Exclusion
 
-finding the probability of the union of multiple events
+Finding the probability of the union of multiple events (calculating the total sample in a venn diagram), which is
+complicated by overcounting
+$$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
+
+The number of compartments is the binomial coefficient of the number of event outcomes (circles in the venn diagram) 
 
 <br>
 <br>
