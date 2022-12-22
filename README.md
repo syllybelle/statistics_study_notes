@@ -34,8 +34,10 @@ To kill the server, kill the terminal processs using the standard `ctl + C`
 # Todo
 - Finish the course
 - Add interactive codey bits
+- figure out why the sidebar isn't working 
 - do a bit more documentation
 - fix the R env in the ipynb env, or give up and use an r notebook/r env
 - test npm situation.
+- 
 
 
