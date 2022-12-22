@@ -1,4 +1,4 @@
-<!-- docs/_sidebar.md -->
+<!-- _sidebar.md -->
 * [Home](/)
 * [Lecture Notes](lecture_notes.md)
 * [R notes](r_notes.md)
