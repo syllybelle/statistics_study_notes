@@ -1,0 +1,25 @@
+---
+title: "Untitled"
+author: < username >
+date: < the current date DD/MM/YYYY >
+output: rmarkdown::html_vignette
+---
+```{r}
+set.seed(110)
+sims = 5
+
+sun = rep(0, sims)
+work = rep(sun, sims)
+weather = runif(1)
+
+```
+an r vector appears like this
+sun = 0 0 0 0 0
+    [1] = 0
+    [2] = 0
+    [3] = 0
+    [4] = 0
+    [5] = 0
+
+
+

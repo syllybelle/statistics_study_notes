@@ -3,6 +3,8 @@
 > * [Lecture Notes](lecture_notes.md)  
 > * [R notes](r_notes.md)  
 
+?> learning R from a python background
+
 # R  functions
  
 `c(a, b, ..)`:         combine/concat/create vector/list from items a, b, ..  
@@ -14,5 +16,6 @@
 `length(combinat::permn(c))` = $c!$  
 `length(gtools::combinations(n, r))` = $n \choose r$ (binomial coefficient ) 
 `set.seed(i)` = set the randomisation seed
-`rep(x, ...)` : replicates values in 'x' '...'  times' 
-`runif(1)`: generate random number from a uniform distribution between 0 and 1
+`rep(x, ...)` : replicates values in 'x' '...'  times'. there are a number of arguments, but with an int listed it will output a 1d array
+`runif(1)`: generate random number from a uniform distribution between 0 and 1 (e.g. 0.614549)
+`x.y`: create and assign property `y` to variable/object `x`
