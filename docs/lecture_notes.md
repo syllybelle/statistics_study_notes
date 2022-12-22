@@ -32,13 +32,13 @@
 - `marginal probability`: Marginal probability is the probability of an event irrespective of the outcome of another
   variable.
 
-
 <details>
   <summary> A summary, to clarify the shape of things, etc </summary>
 
 just because I lost a lot of time being very confused about this
-An event/outcome is often seen referred to both as a single object as part of a larger sample space, but also as a set itself, 
-containing observations.  
+An event/outcome is often seen referred to both as a single object as part of a larger sample space, but also as a set
+itself,
+containing observations.
 
 Consider:
 50 of 100 people drive to work (A), 25/100 get coffee before work (B), 10/100 do both ($A \cap B$).
@@ -48,27 +48,29 @@ A only = (50-10)
 B only = (15-10)  
 both = 10
 (neither = 45)
-The numbers refer to the observations. in this way, these events are seen as sets containing observations, each set partitioning the sample space of possible outcomes.
+The numbers refer to the observations. in this way, these events are seen as sets containing observations, each set
+partitioning the sample space of possible outcomes.
 
 but the venn diagram itself is a set containing all possible outcome combinations.
 we have a new sample space of all possible outcomes (this maps to the segments in the venn diagram)
-but when looking at probabilities, we can then look at all possible combinations of these events occuring, for example, 
+but when looking at probabilities, we can then look at all possible combinations of these events occuring, for example,
 the probability of people driving to work (whether or not they get coffee)
 the probability of people driving to work or getting coffee, but not both.
 Now we have a new space of all possible combinations of outcomes (these are often coin flipping examples),
-Now, with the 4 compartments of the venn diagram (A only, B only, both A and B, neither), we have 24 different combinations of outcomes
+Now, with the 4 compartments of the venn diagram (A only, B only, both A and B, neither), we have 24 different
+combinations of outcomes and this is where binomial coefficients and permuitations and combinations come in.
 And this can fuck right off.
 
 </details>
 
 <br>
 
-
 ## Axioms & conventions
 
 Axiom: a statement or proposition which is regarded as being established, accepted, or self-evidently true.
 
 - $A$: set or event
+- $0! = 1$
 - Empty set: $\phi$
 - For any event $A$, $0 \le P(A) \le 1 $
 - $P(S) = 1$
@@ -189,8 +191,9 @@ Probability that A occurs given that B occurs: $P(A|B)=\frac{P(A \cap B)}{P(B)}$
       $$ P(S) = P(A \cap B^{c}) + P(A \cap B) + P(A^{c} \cap B^{c}) + P(A^{c} \cap B) $$
       $$ 1 = P(A)⋅P(B^{c})  + P(A)⋅P(B) + P(A^{c})⋅P(B^{c}) + P(A^{c})⋅P(B) $$
 
-- the `marginal probability` refers to the probability of an event occuring independent of other outcomes, and is the sum
-  of the conditional probabilities. (I refer to the marginal probability as the global probability sometimes)  
+- the `marginal probability` refers to the probability of an event occuring independent of other outcomes, and is the
+  sum
+  of the conditional probabilities. (I refer to the marginal probability as the global probability sometimes)
 
 <br>
 
@@ -265,8 +268,10 @@ $$P(A|B) = \frac {P(B|A)⋅P(A)}{P(B)} = \frac {P(A \cap B)}{P(B|A) ⋅ P(A) + P
 > To calculate the denominator $P(B)$ (law of total probability):
 > - The global probability of frodo arriving is the probability of
     >
+
 - frodo arriving when sam does not come, weighted by the probability of sam coming,
->   - plus the probability of frodo arriving weighted by the probability of sam not coming
+
+> - plus the probability of frodo arriving weighted by the probability of sam not coming
 >
 > > $(B) = P(B|A) ⋅ P(A) + P(B|A^{c}) ⋅ P(A^{c}) = 0.9 ⋅ 0.8 + 0.1 ⋅ 0.2 = 0.74$
 >
@@ -282,10 +287,71 @@ Finding the probability of the union of multiple events (calculating the total s
 complicated by overcounting
 $$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
 
-The number of compartments is the binomial coefficient of the number of event outcomes (circles in the venn diagram) 
+The number of compartments which is the union of k out of n outcomes is the binomial coefficient of the number of event outcomes 
+(in a three circle diagram, the number of compartment containing experiments for a single outcome ("singles") is $\binom{3}{1} = 
+3$, containing two outcomes ("doubles") is $\binom{3}{2} = 3$, containing 3 outcomes "triples" is $\binom{3}{3} = 1$)
+
+To account for overcounting, this generification can be applied:  
+$$P(Union of many Events) = P(Singles) - P(Doubles) + P(Triples) - P(Quadruples) ...$$
+
+This is useful in unordered matching problems without replacement (likelihood of matching with your pair)  
+
+<details>
+
+  <summary> De Montmort's Pair Matching Problem </summary>
+
+> there are two sets: e.g. people and hats. Each person has a matching hat (forming a pair), but both sets are shuffled.
+> Find P(A): probability that at least one pair is matched when they try to join.
+> Definitions:
+> - n = number of pairs (so there are 2n objects)
+> - i = the identity/index of an item from one list (in this example, a hat)
+> - j = the identity/index of one item from another list (in this example, a person)
+> - E = a hypothetical (past) event used to calculate situational probabilities: a single hypothetical selecting a hat is an 
+    event $E_{ij}$, that can be either be a match (1 - they have selected their own hat) or not match (0)
+> - A = a proposed (future) event which has a probability of occurring
+> - c = a combination of E events, such that  every individual has selected a hat
+> - S = the total space which is the sum of all possible c s (every possible combination between hats & people)
+> Building up the probability space:  
+> - a hypothetical person (i) selecting a hat (j) from a pool of n hats has: $P(E_{ij} = 1) = \frac{1}{n}$
+> - the probability of every hypothetical individual selecting the right hat in a single go: $P(c = 1)\frac{1}{n!}$ 
+> - to calculate the number of different combinations that can be made between people and hats = n!:  
+>   - given that the order in which people choose hats doesn't matter:  
+>   - can be thought of permutations of hat orders: matching an index with a hat  
+> 
+> - $\frac {n!} {(n-k)!} ; n = k \therefore (n-k)! = 1$  
+> The proability P(A_{})
+> if we consider each matchup between a hat and a particualar person for all n! combinations of hat-person pairs an event, 
+> then the probability of that hat-person matchup is the number of combinations in which that matchup occurs, over all 
+> combinations.
+> 
+> the probability of a person matching with the right hat in a single matchup event is $n$, the next person has an $(n-1)$
+> chance, etc. 
+> this is a set of events, and we are considering permutations.
+> (In case this helps with context: A simple probability that the hats are in the right order, is n!)
+> The number of possible matchups is an ordered permutation problem without replacement
+> The chance of at least one pair matching up is sum of the combinations in which at least one matchup occurs divided by all 
+> possible combinations
+> 
+> P(A) = union of a meetup event
+> $S_{n}$: number of successful matches given n party goers
+
+
+</details>  
 
 <br>
 <br>
+
+
+
+
+<details>
+
+  <summary> Example</summary>  
+
+jhk 
+
+</details>  
+
 
 # Katex ref
 
