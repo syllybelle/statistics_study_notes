@@ -5,8 +5,9 @@
 
 <hr/>
 
-?> [coursera course](https://www.coursera.org/learn/probability-theory-foundation-for-data-science/)
+?> [coursera course](https://www.coursera.org/learn/probability-theory-foundation-for-data-science/)  
 [Textbook](https://bookdown.org/probability/beta/)  
+
 
 ** my understanding of Coursera's [acceptable use policy](https://www.coursera.org/about/terms#acceptable-use-policy) 
 is that personal notes are fine to share, as long as it is not lifting the content.
@@ -84,31 +85,48 @@ of either the textbook or the Coursera course, but if anyone knows otherwise, pl
 
 
 
-# test
+[//]: # (# test)
 
-> An awesome project.  
-> 
-`c(a, b, ..)`:         combine/concat/create vector/list from items a, b, ..  
-`character(a)`: convert `a` to string, or convert iterations in an interable to string type  
-`rbind()`:     add rows
+[//]: # ()
+[//]: # (> An awesome project.  )
 
+[//]: # (> )
 
-<!-- ImJoyPlugin: {"type": "web-worker", "hide_code_block": true, "editor_height": "200px"} -->
-```js
-api.createWindow({src:"https://gist.github.com/oeway/96cd0f99e87abbcf97d65a3605471130"})
-```
+[//]: # (`c&#40;a, b, ..&#41;`:         combine/concat/create vector/list from items a, b, ..  )
 
- 
-f<!-- ImJoyPlugin: { "type": "web-python"} -->
-```python
-from imjoy import api
+[//]: # (`character&#40;a&#41;`: convert `a` to string, or convert iterations in an interable to string type  )
 
-class ImJoyPlugin():
-    async def setup(self):
-        pass
+[//]: # (`rbind&#40;&#41;`:     add rows)
 
-    def run(self, ctx):
-        api.alert("Hello from a python plugin")
+[//]: # (<!-- ImJoyPlugin: {"type": "web-worker", "hide_code_block": true, "editor_height": "200px"} -->)
 
-api.export(ImJoyPlugin())
-```
+[//]: # (```js)
+
+[//]: # (api.createWindow&#40;{src:"https://gist.github.com/oeway/96cd0f99e87abbcf97d65a3605471130"}&#41;)
+
+[//]: # (```)
+
+[//]: # ()
+[//]: # ( )
+[//]: # (f<!-- ImJoyPlugin: { "type": "web-python"} -->)
+
+[//]: # (```python)
+
+[//]: # (from imjoy import api)
+
+[//]: # ()
+[//]: # (class ImJoyPlugin&#40;&#41;:)
+
+[//]: # (    async def setup&#40;self&#41;:)
+
+[//]: # (        pass)
+
+[//]: # ()
+[//]: # (    def run&#40;self, ctx&#41;:)
+
+[//]: # (        api.alert&#40;"Hello from a python plugin"&#41;)
+
+[//]: # ()
+[//]: # (api.export&#40;ImJoyPlugin&#40;&#41;&#41;)
+
+[//]: # (```)
