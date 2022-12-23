@@ -302,19 +302,46 @@ This is useful in unordered matching problems without replacement (likelihood of
 
 > there are two sets: e.g. people and hats. Each person has a matching hat (forming a pair), but both sets are shuffled.
 > Find P(A): probability that at least one pair is matched when they try to join.
+> - basic approach: say we have three people-hat pairs
+
+| Person a | Person b | Person c | 1   | 2   | 3   | n matches |
+|----------|----------|----------|-----|-----|-----|-----------|
+| Hat A    | Hat B    | Hat C    | 1   | 1   | 1   | 3         |
+| A        | C        | B        | 1   |     |     | 1         |
+| B        | A        | C        |     |     | 1   | 1         |
+| B        | C        | A        |     |     |     | 0         |
+| C        | A        | B        |     |     |     | 0         |
+| C        | B        | A        |     | 1   |     | 1         |
+
+> - 4/6 outcomes have at least 1 match, 
+> - 1/6 has has 3 matches,
+> - 0/6 have two matches
+> - 3/6 have 1 match
+> - 2/6 have 0 matches
+
 > Definitions:
 > - n = number of pairs (so there are 2n objects)
 > - i = the identity/index of an item from one list (in this example, a hat)
 > - j = the identity/index of one item from another list (in this example, a person)
 > - E = a hypothetical (past) event used to calculate situational probabilities: a single hypothetical selecting a hat is an 
     event $E_{ij}$, that can be either be a match (1 - they have selected their own hat) or not match (0)
-> - A = a proposed (future) event which has a probability of occurring
-> - c = a combination of E events, such that  every individual has selected a hat
-> - S = the total space which is the sum of all possible c s (every possible combination between hats & people)
+> - c = a combination of E events, such that  every individual has selected a hat (c = set$[E_{0} E_{1} ... E_{n}]$))
+> - S = the total space of all possible c s (every possible combination between hats & people)
+> 
+> $P(A) = frac{|S_{c where n(E=1) > 0}|}{S} $
 > Building up the probability space:  
 > - a hypothetical person (i) selecting a hat (j) from a pool of n hats has: $P(E_{ij} = 1) = \frac{1}{n}$
-> - the probability of every hypothetical individual selecting the right hat in a single go: $P(c = 1)\frac{1}{n!}$ 
-> - to calculate the number of different combinations that can be made between people and hats = n!:  
+> - the probability of every hypothetical individual selecting the right hat in a lineup (c): $P(c  1)\frac{1}{n!}$ 
+> - the probability of at least one hypothetical matchup in a lineup (c):  
+>   - each match event has probability $frac{1}{n-i}$ of being a match
+>   - if this probability is represented in a circle on a venn diagram with n circles, the probability of at least one matchup 
+      > could be considered to be the union of all the circles
+>   - if there are three people with three hats:
+>     - the first person has a 1/3 chance
+>     - the second person has a 1/2 chance
+>     - the third person has a 1/
+> 
+> - to calculate the number of different combinations that can be made between people and hats: $|S| = n!$:  
 >   - given that the order in which people choose hats doesn't matter:  
 >   - can be thought of permutations of hat orders: matching an index with a hat  
 > 
