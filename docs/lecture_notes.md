@@ -29,12 +29,48 @@
   naive probability  
   $P(A|B) = \frac {P(A \cap B)}{P(B)}$ **NB: do not confuse symbols '|' ('given') and '$\cup$' ('or')))**
 - `assumed equivalence`: `$A:=B$ assuming/given that/when A is equivalent to B
+- `marginal probability`: Marginal probability is the probability of an event irrespective of the outcome of another
+  variable.
+
+<details>
+  <summary> A summary, to clarify the shape of things, etc </summary>
+
+just because I lost a lot of time being very confused about this
+An event/outcome is often seen referred to both as a single object as part of a larger sample space, but also as a set
+itself,
+containing observations.
+
+Consider:
+50 of 100 people drive to work (A), 25/100 get coffee before work (B), 10/100 do both ($A \cap B$).
+
+This is how the venn diagram number would look:
+A only = (50-10)   
+B only = (15-10)  
+both = 10
+(neither = 45)
+The numbers refer to the observations. in this way, these events are seen as sets containing observations, each set
+partitioning the sample space of possible outcomes.
+
+but the venn diagram itself is a set containing all possible outcome combinations.
+we have a new sample space of all possible outcomes (this maps to the segments in the venn diagram)
+but when looking at probabilities, we can then look at all possible combinations of these events occuring, for example,
+the probability of people driving to work (whether or not they get coffee)
+the probability of people driving to work or getting coffee, but not both.
+Now we have a new space of all possible combinations of outcomes (these are often coin flipping examples),
+Now, with the 4 compartments of the venn diagram (A only, B only, both A and B, neither), we have 24 different
+combinations of outcomes and this is where binomial coefficients and permuitations and combinations come in.
+And this can fuck right off.
+
+</details>
+
+<br>
 
 ## Axioms & conventions
 
 Axiom: a statement or proposition which is regarded as being established, accepted, or self-evidently true.
 
 - $A$: set or event
+- $0! = 1$
 - Empty set: $\phi$
 - For any event $A$, $0 \le P(A) \le 1 $
 - $P(S) = 1$
@@ -155,6 +191,10 @@ Probability that A occurs given that B occurs: $P(A|B)=\frac{P(A \cap B)}{P(B)}$
       $$ P(S) = P(A \cap B^{c}) + P(A \cap B) + P(A^{c} \cap B^{c}) + P(A^{c} \cap B) $$
       $$ 1 = P(A)⋅P(B^{c})  + P(A)⋅P(B) + P(A^{c})⋅P(B^{c}) + P(A^{c})⋅P(B) $$
 
+- the `marginal probability` refers to the probability of an event occuring independent of other outcomes, and is the
+  sum
+  of the conditional probabilities. (I refer to the marginal probability as the global probability sometimes)
+
 <br>
 
 <details>
@@ -210,40 +250,135 @@ $$P(A|B) = \frac {P(B|A)⋅P(A)}{P(B)} = \frac {P(A \cap B)}{P(B|A) ⋅ P(A) + P
 
 > What is the probability that A occured (sam went along), given that B occured (frodo arrived)?  
 > Known:
-> - $P(B|A) = .9$: the relative probability of frodo arriving, given that sam came  
-> - $P(B|A^(C)) = .1$ the relative probability of frodo arriving, given that sam did not come 
+> - $P(B|A) = .9$: the relative probability of frodo arriving, given that sam came
+> - $P(B|A^(C)) = .1$ the relative probability of frodo arriving, given that sam did not come
 > - $P(A) = 0.8$ the overall probability that sam comes
 > - $P(A^(C)) = 0.2$ the overall probability that sam does not come (summing of partitions)
-> solve P(A|B)
+    > solve P(A|B)
 >
 > P(sam coming given that frodo arrived) is the overall probability that both frodo arrived and sam came, dividing
 > out the probability that frodo did not arrive (removing those outcomes from the sample space).
 > $$P(A|B) = \frac{P(B \cap A)}{P(B)}$$  
 > However, we do not have either of those terms.  
-> To calculate the numerator $\frac{P(B \cap A)} (multiplication rule)$:  
+> To calculate the numerator $\frac{P(B \cap A)} (multiplication rule)$:
 > - The global probability that both sam and frodo arrived is the probability of frodo arriving if sam comes, modified
-    by the global likelihood of sam coming  
+    by the global likelihood of sam coming
 >
 > > $P(B \cap A) = P(B|A) ⋅ P(A) = 0.9 ⋅ 0.8$ such that $P(A|B)= P(0.9 ⋅ 0.8) = 0.72$  
-> To calculate the denominator $P(B)$ (law of total probability):  
-> - The global probability of frodo arriving is the probability of  
->   - frodo arriving when sam does not come, weighted by the probability of sam coming,  
->   - plus the probability of frodo arriving weighted by the probability of sam not coming
-> 
-> > $(B) = P(B|A) ⋅ P(A) + P(B|A^{c}) ⋅ P(A^{c}) = 0.9 ⋅ 0.8 + 0.1 ⋅ 0.2 = 0.74$  
->   
+> To calculate the denominator $P(B)$ (law of total probability):
+> - The global probability of frodo arriving is the probability of
+    >
+
+- frodo arriving when sam does not come, weighted by the probability of sam coming,
+
+> - plus the probability of frodo arriving weighted by the probability of sam not coming
+>
+> > $(B) = P(B|A) ⋅ P(A) + P(B|A^{c}) ⋅ P(A^{c}) = 0.9 ⋅ 0.8 + 0.1 ⋅ 0.2 = 0.74$
+>
 > $$P(A|B)= \frac {0.72}{0.74} = 0.97$$  
 > There is a 0.97 chance that sam has come with
-> 
+>
 
 </details>
 
 ### Inclusion/Exclusion
 
-finding the probability of the union of multiple events
+Finding the probability of the union of multiple events (calculating the total sample in a venn diagram), which is
+complicated by overcounting
+$$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
+
+The number of compartments which is the union of k out of n outcomes is the binomial coefficient of the number of event outcomes 
+(in a three circle diagram, the number of compartment containing experiments for a single outcome ("singles") is $\binom{3}{1} = 
+3$, containing two outcomes ("doubles") is $\binom{3}{2} = 3$, containing 3 outcomes "triples" is $\binom{3}{3} = 1$)
+
+To account for overcounting, this generification can be applied:  
+$$P(Union of many Events) = P(Singles) - P(Doubles) + P(Triples) - P(Quadruples) ...$$
+
+This is useful in unordered matching problems without replacement (likelihood of matching with your pair)  
+
+<details>
+
+  <summary> De Montmort's Pair Matching Problem </summary>
+
+> there are two sets: e.g. people and hats. Each person has a matching hat (forming a pair), but both sets are shuffled.
+> Find P(A): probability that at least one pair is matched when they try to join.
+> - basic approach: say we have three people-hat pairs
+
+| Person a | Person b | Person c | 1   | 2   | 3   | n matches |
+|----------|----------|----------|-----|-----|-----|-----------|
+| Hat A    | Hat B    | Hat C    | 1   | 1   | 1   | 3         |
+| A        | C        | B        | 1   |     |     | 1         |
+| B        | A        | C        |     |     | 1   | 1         |
+| B        | C        | A        |     |     |     | 0         |
+| C        | A        | B        |     |     |     | 0         |
+| C        | B        | A        |     | 1   |     | 1         |
+
+> - 4/6 outcomes have at least 1 match, 
+> - 1/6 has has 3 matches,
+> - 0/6 have two matches
+> - 3/6 have 1 match
+> - 2/6 have 0 matches
+
+> Definitions:
+> - n = number of pairs (so there are 2n objects)
+> - i = the identity/index of an item from one list (in this example, a hat)
+> - j = the identity/index of one item from another list (in this example, a person)
+> - E = a hypothetical (past) event used to calculate situational probabilities: a single hypothetical selecting a hat is an 
+    event $E_{ij}$, that can be either be a match (1 - they have selected their own hat) or not match (0)
+> - c = a combination of E events, such that  every individual has selected a hat (c = set$[E_{0} E_{1} ... E_{n}]$))
+> - S = the total space of all possible c s (every possible combination between hats & people)
+> 
+> $P(A) = frac{|S_{c where n(E=1) > 0}|}{S} $
+> Building up the probability space:  
+> - a hypothetical person (i) selecting a hat (j) from a pool of n hats has: $P(E_{ij} = 1) = \frac{1}{n}$
+> - the probability of every hypothetical individual selecting the right hat in a lineup (c): $P(c  1)\frac{1}{n!}$ 
+> - the probability of at least one hypothetical matchup in a lineup (c):  
+>   - each match event has probability $frac{1}{n-i}$ of being a match
+>   - if this probability is represented in a circle on a venn diagram with n circles, the probability of at least one matchup 
+      > could be considered to be the union of all the circles
+>   - if there are three people with three hats:
+>     - the first person has a 1/3 chance
+>     - the second person has a 1/2 chance
+>     - the third person has a 1/
+> 
+> - to calculate the number of different combinations that can be made between people and hats: $|S| = n!$:  
+>   - given that the order in which people choose hats doesn't matter:  
+>   - can be thought of permutations of hat orders: matching an index with a hat  
+> 
+> - $\frac {n!} {(n-k)!} ; n = k \therefore (n-k)! = 1$  
+> The proability P(A_{})
+> if we consider each matchup between a hat and a particualar person for all n! combinations of hat-person pairs an event, 
+> then the probability of that hat-person matchup is the number of combinations in which that matchup occurs, over all 
+> combinations.
+> 
+> the probability of a person matching with the right hat in a single matchup event is $n$, the next person has an $(n-1)$
+> chance, etc. 
+> this is a set of events, and we are considering permutations.
+> (In case this helps with context: A simple probability that the hats are in the right order, is n!)
+> The number of possible matchups is an ordered permutation problem without replacement
+> The chance of at least one pair matching up is sum of the combinations in which at least one matchup occurs divided by all 
+> possible combinations
+> 
+> P(A) = union of a meetup event
+> $S_{n}$: number of successful matches given n party goers
+
+
+</details>  
 
 <br>
 <br>
+
+
+
+
+<details>
+
+  <summary> Example</summary>  
+
+jhk 
+
+</details>  
+
 
 # Katex ref
 
