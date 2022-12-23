@@ -1,8 +1,3 @@
-> _while i'm debugging the sidebar (which works locally but not after deployment) here are the links:_
-> * [Home](/)
-> * [Lecture Notes](lecture_notes.md)
-> * [R notes](r_notes.md)
-
 #### Course notes
 
 #### University of Colorado Boulder

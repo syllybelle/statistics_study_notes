@@ -9,7 +9,7 @@ I have approximately 1 experience with npm; i don't know how to use package.json
 [Textbook](https://bookdown.org/probability/beta/)  Probability! by Matt DosSantos DiSorbo and Harvard Statistics Professor Joe Blitzstein.
 
 # Quick access
-[Access the notes]() hosted throguh GitHub pages
+[Access the notes](https://syllybelle.github.io/statistics_study_notes/#/) hosted through GitHub pages
 
 
 # Modification and local hosting
