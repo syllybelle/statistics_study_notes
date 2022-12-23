@@ -130,6 +130,7 @@ n identical objects can be divided into r groups where each group can have any n
 > How many permutations of a 7 letter string can be made using 3 letter As and 4 letter Bs
 > - the unique ways can 3 indices (locations) in the sequence be chosen for the A to be in (all combination of 3 unique
     locations)
+> - the generic problem: how many unique sets can  be created by selecting k identifiable objects from superset n
 > - the unique ways can 4 indices in the sequence be chosen for the B to be in (all combination of 4 unique locations)
 > - the locations are unique ("without replacement", but the order in which they are selected does not matter:
     indices [1, 3, 4] = indices [4, 3, 1] = BABAABB (assuming a 0 index)
@@ -293,26 +294,49 @@ This is useful in unordered matching problems without replacement (likelihood of
 
 <details>
 
-  <summary> De Montmort's Pair Matching Problem </summary>
+  <summary> De Montmort's Pair Matching Problem 
 
 > there are two sets: e.g. people and hats. Each person has a matching hat (forming a pair), but both sets are shuffled.
 > Find P(A): probability that at least one pair is matched when they try to join.
-> - basic approach: say we have three people-hat pairs
+> - brute force approach: say we have three people-hat pairs
+>   - there are three people [Persona a, Person B and Person C]. person A owns Hat A, Person B owns Hat B and Person C owns 
+      hat C. What is the probability that, after everyone has chosen a hat from a disordered pile, at least 1 person selects 
+      their own hat.
+>   - each row ($c_{n}$) represents a combination of hats people choose (person a chose hat a, person b chose hat B and peson c 
+      chose hat c = 1 combination)
+>   - the rows together represent all possible combinations of hat-people (sample space $S$)
+>   - if we call a person choosing a hat (represented by a cell in the table) an event ($E$), each E can be classified as a 
+      match (1) or not a match (0), represented on the right side of the table.
+>   - the last column counts the number of matches that occured in the combination of hat-peeople pairs
+>   - From the table below, it can be seen that at least one positive match (n matches >= 1) occured in $[c_{0}, c_{1}, c_{2}, c_
+      > {5}]$ - i.e. 4 out of 6 combinations, so P(A) = 1/3
 
-| Person a | Person b | Person c | 1   | 2   | 3   | n matches |
-|----------|----------|----------|-----|-----|-----|-----------|
-| Hat A    | Hat B    | Hat C    | 1   | 1   | 1   | 3         |
-| A        | C        | B        | 1   |     |     | 1         |
-| B        | A        | C        |     |     | 1   | 1         |
-| B        | C        | A        |     |     |     | 0         |
-| C        | A        | B        |     |     |     | 0         |
-| C        | B        | A        |     | 1   |     | 1         |
+|         | Person a | Person b | Person c |     | a match | b match | c + match | n matches |
+|---------|----------|----------|----------|-----|---------|---------|-----------|-----------|
+| $c_{0}$ | Hat A    | Hat B    | Hat C    | ->  | 1       | 1       | 1         | 3         |
+| $c_{1}$ | A        | C        | B        | ->  | 1       | 0       | 0         | 1         |
+| $c_{2}$ | B        | A        | C        | ->  | 0       | 0       | 1         | 1         |
+| $c_{3}$ | B        | C        | A        | ->  | 0       | 0       | 0         | 0         |
+| $c_{4}$ | C        | A        | B        | ->  | 0       | 0       | 0         | 0         |
+| $c_{5}$ | C        | B        | A        | ->  | 0       | 1       | 0         | 1         |
 
-> - 4/6 outcomes have at least 1 match, 
-> - 1/6 has has 3 matches,
-> - 0/6 have two matches
-> - 3/6 have 1 match
-> - 2/6 have 0 matches
+> - Solving P(A) for n pairs
+>   - within a combination (c), the probability of a matchup $P(E=1) for a given E is n, (n-1), (n-2), (n-n)$, depending on how 
+    many have already been chosen.
+>   - $|S| = n!$ - there are n! possible combinations of n people choosing n hats ($n \choose n$$= n!$)
+>   - the probability of at least one matchup occuring
+
+>     - probabilities
+>     - 4/6 outcomes have at least 1 match,
+>     - 1/6 have 3 matches,
+>     - 0/6 have two matches
+>     - 3/6 have 1 match
+>     - 2/6 have 0 matches
+>     - if we consider each person-hat matchup to be an even
+>     - the 
+
+
+</summary>
 
 > Definitions:
 > - n = number of pairs (so there are 2n objects)
