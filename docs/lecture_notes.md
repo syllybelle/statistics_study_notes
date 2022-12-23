@@ -72,7 +72,7 @@ Axiom: a statement or proposition which is regarded as being established, accept
 - If $A_{1}, A_{2} ... A_{n}$ are a collection of mutually exclusive (disjoint) events, then the probability of the
   union of those events equals the sum of the individual probabilities.  
   if $P(A) = 0.20$ and $P(B) = 0.15$, then $P(A \cup B) = 0.35$  
-  $P(\cup_{n}^{k=1} A_{k}) = \displaystyle\sum_{k=1}^n P(A_{k})$
+  $P(\cup_{n}^{k} A_{k}) = \displaystyle\sum_{k}^n P(A_{k})$
 
 Based off the above:
 
@@ -288,13 +288,40 @@ The number of compartments which is the union of k out of n outcomes is the bino
 3$, containing two outcomes ("doubles") is $\binom{3}{2} = 3$, containing 3 outcomes "triples" is $\binom{3}{3} = 1$)
 
 To account for overcounting, this generification can be applied:  
-$$P(Union of many Events) = P(Singles) - P(Doubles) + P(Triples) - P(Quadruples) ...$$
+$$P(Union\enspace of\enspace many\enspace Events) = P(Singles) - P(Doubles) + P(Triples) - P(Quadruples) ...$$
 
-This is useful in unordered matching problems without replacement (likelihood of matching with your pair)  
+Representing an event as $A_{i}$:
+$$P(A_{1} \cup A_{2} \cup ... \cup A_{n}) = P(A_{0}) + P(A_{1}) + P(A_{n}) + ... - P(A_{0} \cap A_{1}) - $$
+$$P(A_{0} \cap A_{3}) - ... - P(A_{n-1} \cap A_{n}) -  ... +/- P(intersection\enspace of\enspace all\enspace circles) $$
+
+(I like zero indexing things, sorry - so there are a lot of (n-1)s lying around)
+$$P(\cup_{i=0}^{n-1} A_{i}) = \sum_{i=0}^{n-1} P(A_{i}) - \sum_{i=0; i < j}^{n-1} P(A_{i} \cap A_{j})  + \sum_{i=0; i < j < k}^
+{n} P(A_{i} \cap A_{j}  \cap A_{k}) + (-1)^{n+1} ⋅ P(A_{0} \cap ... \cap A_{n-1})$$
 
 <details>
 
-  <summary> De Montmort's Pair Matching Problem 
+  <summary> where does the that last term come from?</summary>  
+
+> $(-1)^{n+1}$ TLDR: it's to make the signs correct
+> - the sign of the last term will depend on whether the number of intersecting events is even (will be subtracted) or 
+odd  (will be added). the number of intersecting events in the last term is n (the intersection of all events).
+> - A positive sign can be derived by multiplying a term by (-1) by an even multiple, and a negative sign can be derived by 
+multiplying (-1) by an odd multiple. To derive a negative sign from  an even (n) from the last term, we must offset n by 
+one: $(-1)^{n+1}$
+>   - in this case, because n is a count of the number of terms, not an index, it is not zero indexed, so you just use plain 
+      > old n. but then offset by one. because of the way that it is.
+> - This is useful in unordered matching problems without replacement (likelihood of matching with your pair)  
+> 
+> why is there no sigma? 
+> - there is only 1 section that represents the union of all events (the middle of the venn diagram), so there is only 1 
+    > probability term to add/subtract.
+
+</details>
+
+
+<details>
+
+  <summary> Application: De Montmort's [Pair] Matching Problem </summary>
 
 > there are two sets: e.g. people and hats. Each person has a matching hat (forming a pair), but both sets are shuffled.
 > Find P(A): probability that at least one pair is matched when they try to join.
@@ -302,90 +329,75 @@ This is useful in unordered matching problems without replacement (likelihood of
 >   - there are three people [Persona a, Person B and Person C]. person A owns Hat A, Person B owns Hat B and Person C owns 
       hat C. What is the probability that, after everyone has chosen a hat from a disordered pile, at least 1 person selects 
       their own hat.
->   - each row ($c_{n}$) represents a combination of hats people choose (person a chose hat a, person b chose hat B and peson c 
-      chose hat c = 1 combination)
+>   - each row ($c_{n}$) represents a combination of hats people choose (for example the second row: person a chose hat a, 
+      person b chose hat C and peson c chose hat b)
 >   - the rows together represent all possible combinations of hat-people (sample space $S$)
->   - if we call a person choosing a hat (represented by a cell in the table) an event ($E$), each E can be classified as a 
-      match (1) or not a match (0), represented on the right side of the table.
+>   - if we call a person choosing a hat (represented by a cell in the table) an event ($E$), each E can be assigned a 
+      > value, depending on whether there was a match or not (match = 1, not a match = 0) or not a match (0).   
+     $c_{1} = [E_{0}, E_{1}, E_{2}] = [1, 0 , 0]$ 
+>   - the chance that a person receives their hat $P(E=1) = 2/6 = 1/3$ 
 >   - the last column counts the number of matches that occured in the combination of hat-peeople pairs
 >   - From the table below, it can be seen that at least one positive match (n matches >= 1) occured in $[c_{0}, c_{1}, c_{2}, c_
-      > {5}]$ - i.e. 4 out of 6 combinations, so P(A) = 1/3
+      > {5}]$ - i.e. 4 out of 6 combinations, so P(A) = 2/3
+>   - note that rearranging the order of the people will not change the number of possible combinations
 
-|         | Person a | Person b | Person c |     | a match | b match | c + match | n matches |
-|---------|----------|----------|----------|-----|---------|---------|-----------|-----------|
-| $c_{0}$ | Hat A    | Hat B    | Hat C    | ->  | 1       | 1       | 1         | 3         |
-| $c_{1}$ | A        | C        | B        | ->  | 1       | 0       | 0         | 1         |
-| $c_{2}$ | B        | A        | C        | ->  | 0       | 0       | 1         | 1         |
-| $c_{3}$ | B        | C        | A        | ->  | 0       | 0       | 0         | 0         |
-| $c_{4}$ | C        | A        | B        | ->  | 0       | 0       | 0         | 0         |
-| $c_{5}$ | C        | B        | A        | ->  | 0       | 1       | 0         | 1         |
-
-> - Solving P(A) for n pairs
->   - within a combination (c), the probability of a matchup $P(E=1) for a given E is n, (n-1), (n-2), (n-n)$, depending on how 
-    many have already been chosen.
->   - $|S| = n!$ - there are n! possible combinations of n people choosing n hats ($n \choose n$$= n!$)
->   - the probability of at least one matchup occuring
-
->     - probabilities
->     - 4/6 outcomes have at least 1 match,
->     - 1/6 have 3 matches,
->     - 0/6 have two matches
->     - 3/6 have 1 match
->     - 2/6 have 0 matches
->     - if we consider each person-hat matchup to be an even
->     - the 
-
-
-</summary>
-
-> Definitions:
-> - n = number of pairs (so there are 2n objects)
-> - i = the identity/index of an item from one list (in this example, a hat)
-> - j = the identity/index of one item from another list (in this example, a person)
-> - E = a hypothetical (past) event used to calculate situational probabilities: a single hypothetical selecting a hat is an 
-    event $E_{ij}$, that can be either be a match (1 - they have selected their own hat) or not match (0)
-> - c = a combination of E events, such that  every individual has selected a hat (c = set$[E_{0} E_{1} ... E_{n}]$))
-> - S = the total space of all possible c s (every possible combination between hats & people)
+|         | Person a | Person b | Person c |     | a match     | b match     | c match     | n matches                |
+|---------|----------|----------|----------|-----|-------------|-------------|-------------|--------------------------|
+| $c_{0}$ | Hat A    | Hat B    | Hat C    | ->  | $E_{0} = 1$ | $E_{1} = 1$ | $E_{2} = 1$ | $\sum_{i=0}^{2} E_{i}=3$ |
+| $c_{1}$ | A        | C        | B        | ->  | $E_{0} = 1$ | $E_{1} = 0$ | $E_{2} = 0$ | $\sum_{i=0}^{2} E_{i}$   |
+| $c_{2}$ | B        | A        | C        | ->  | $E_{0} = 0$ | $E_{1} = 0$ | $E_{2} = 1$ | $\sum_{i=0}^{2} E_{i}$   |
+| $c_{3}$ | B        | C        | A        | ->  | $E_{0} = 0$ | $E_{1} = 0$ | $E_{2} = 0$ | $\sum_{i=0}^{2} E_{i}=0$ |
+| $c_{4}$ | C        | A        | B        | ->  | $E_{0} = 0$ | $E_{1} = 0$ | $E_{2} = 0$ | $\sum_{i=0}^{2} E_{i}=0$ |
+| $c_{5}$ | C        | B        | A        | ->  | $E_{0} = 0$ | $E_{1} = 1$ | $E_{2} = 0$ | $\sum_{i=0}^{2} E_{i}$   |
+ 
+> - Solving P(A) for n pair
+>   - within a combination (c), the base probability of each person receiving their own hat in a whole lineup is equal $(P(E_{0}) = P(E_
+        > {1}))$.
+>     - the probability of the second person, given the result off the first person, will be different ($P(E_{1} | E_
+        > {0})$, but at naively, before anyone starts choosing hats, the first and the second person have the same probability.
+>     - the number of combinations in which a hat matches with the correct person(E=1): $(n-1)!$.
+>       - this is because there are (n-1) hats which have (n-1)! person-hat combinations.
+>       - using the example above, in what proportion of rows will person a match with their hat: hat A becomes fixed, so the 
+          > number of combinations is determined by the number of ways the remaining hats can be arranged
+>   - $|S| = n!$: there are n! possible combinations of n people choosing n hats ($n \choose n$$= n!$)
+>   - the probability of everyone choosing their own hat: $ P(\sum_{i=0}^{n} E_{i}=n) = \frac{1}{n!}$ 
+>   - the probability of a hat being correctly chosen (this is the same as a person choosing a hat) $P(E)$:
+>     - of the n! combinations, in how many a person receive their hat
+>     - given that we do not know when the process a hat will be chosen
+>   - the probability of at least one matchup occuring ($E_{0} = 1$ or $E_{1} = 1$ etc. ) can be defined as: $ P(\sum_{i=0}^{n} E_
+      > {i} >= 1)$ or as the union of the probabilities.
+>   - this is essentiallly the union of the probabilities of all events being positive (each event is a circle in a venn diagram)
+>     - any of the events can be positive, so it is the union of all circles
+>     - the intersection of all circles would be the probability that all events are a match - i.e. 1/n!
 > 
-> $P(A) = frac{|S_{c where n(E=1) > 0}|}{S} $
-> Building up the probability space:  
-> - a hypothetical person (i) selecting a hat (j) from a pool of n hats has: $P(E_{ij} = 1) = \frac{1}{n}$
-> - the probability of every hypothetical individual selecting the right hat in a lineup (c): $P(c  1)\frac{1}{n!}$ 
-> - the probability of at least one hypothetical matchup in a lineup (c):  
->   - each match event has probability $frac{1}{n-i}$ of being a match
->   - if this probability is represented in a circle on a venn diagram with n circles, the probability of at least one matchup 
-      > could be considered to be the union of all the circles
->   - if there are three people with three hats:
->     - the first person has a 1/3 chance
->     - the second person has a 1/2 chance
->     - the third person has a 1/
+>   - We can therefore apply the inclusion formula above.
+>   - Because no person is more or less likely than another to get their own hat i.e. "symmetry", terms can be simpllifid:
+>     - $\sum_{i=0}^{n-1} P(A_{i})$:
+>       - $P(E_{0}=1) + P(E_{1}=1) + ... + P(E_{n-1}=1) = n  ⋅ P(E_{0}=1)$ 
+>       - $P(E_{0}=1)$ : number of events in which a person gets their hat out of all possible person-hat combinations
+>       - As shown above: $\frac{(n-1)!}{n!}$
 > 
-> - to calculate the number of different combinations that can be made between people and hats: $|S| = n!$:  
->   - given that the order in which people choose hats doesn't matter:  
->   - can be thought of permutations of hat orders: matching an index with a hat  
-> 
-> - $\frac {n!} {(n-k)!} ; n = k \therefore (n-k)! = 1$  
-> The proability P(A_{})
-> if we consider each matchup between a hat and a particualar person for all n! combinations of hat-person pairs an event, 
-> then the probability of that hat-person matchup is the number of combinations in which that matchup occurs, over all 
-> combinations.
-> 
-> the probability of a person matching with the right hat in a single matchup event is $n$, the next person has an $(n-1)$
-> chance, etc. 
-> this is a set of events, and we are considering permutations.
-> (In case this helps with context: A simple probability that the hats are in the right order, is n!)
-> The number of possible matchups is an ordered permutation problem without replacement
-> The chance of at least one pair matching up is sum of the combinations in which at least one matchup occurs divided by all 
-> possible combinations
-> 
-> P(A) = union of a meetup event
-> $S_{n}$: number of successful matches given n party goers
+>       - $\sum_{i=0}^{n-1} P(A_{i}) = n  ⋅ \frac{(n-1)!}{n!}$
+>     - $\sum_{i < j} P(A_{i} \cap A_{j})$
+>       - the number of combinations of two events = $n \choose 2$
+>       - the probability of two hats being chosen by their owners follows the same logic: if we fix 2 events, there are $(n-2)!$
+          combinations of the remaining events, so  $P(A_{i} \cap A_{j}) = \frac{(n-2)!}{n!}$
+>       - $ \binom{n}{2}  ⋅ \frac{(n-2)!}{n!}$
+>     - the $k^{th}$ term: $ \binom{n}{k}  ⋅ \frac{(n-k)!)!}{n!}$ 
+>       - $\frac{n!}{(n-k)!k!} ⋅ \frac{(n-k)!)!}{n!} = \frac{n!(n-k))!}{n!(n-k)!k!} = \frac{(1}{k!}$
+>       - when k = 1: $\frac{1}{1!} = 1$
+>       - when k = n: $\frac{1}{n!}$
+>     - $P(\cup_{i=0}^{n-1} A_{i}) = \sum_{k=1}^{n} \frac{1}{k!} ⋅ (-1)^{k+1}$
+>     - $P(\cup_{i=0}^{n-1} A_{i}) = 1 - \frac{1}{2!} + ...$
+>   - This can be calculated using a [Taylor's Series](https://www.wikiwand.com/en/Taylor_series) 
+>     - tldr: an infinit sum of  terms expressed in terms of a function's derivitives -> there are examples [here](https://people.math.sc.edu/girardi/m142/handouts/10sTaylorPolySeries.pdf)
+>     - the adaptable Taylor series in question: $ e^{x} \approx 1 + x + \frac{x^{2}}{2!} + ... \frac{x^{k-1}}{k!}+ ... $
+>     - $e^{-1} = 1/e \approx (1 - 1) + \frac{1}{2!} - \frac{1}{2!}) + ... + (-1)^{k}⋅ \frac{1}((k+1)!) 
+> $P(A) \approx 1 - \frac{1}{e}$
+> <hr/> 
+>
+</details>
 
-
-</details>  
-
-<br>
-<br>
 
 
 
@@ -401,71 +413,56 @@ jhk
 
 # Katex ref
 
-`01`  $\sum_{n=1}^{10} n^2$  
-`02`  
-`03`  $x = y $  
-`04`  $x < y $  
-`05`  $x > y $  
-`06`  $x \le y $  
-`07`  $x \ge y $  
-`08`  $x^{n}$  
-`09`  $x_{n}$  
-`10`  $\overline{x}$  
-`11`  $\hat{x}$  
-`12`  $\tilde{x}$  
-`13`  $\frac{a}{b}$  
-`14`  $\frac{\partial f}{\partial x}$  
-`15`  $\displaystyle \frac{\partial f}{\partial x}$  
-`16`  $\binom{n}{k}$  
-`17`  $x_{1} + x_{2} + \cdots + x_{n}$  
-`18`  $x_{1}, x_{2}, \dots, x_{n}$  
-`19`  $x=⟨x1,x2,…,xn⟩ \mathbf{x} = \langle x_{1}, x_{2}, \dots, x_{n}\rangle$  
-`20`  $x \in A$  
-`21`  $|A|$  
-`22`  $x \in A$  
-`23`  $x \subset B$  
-`24`  $x \subseteq B$  
-`25`  $A \cup B$  
-`26`  $A \cap B$  
-`27`  $X \sim {\sf Binom}(n, \pi)$ (sf for “slide font”)  
-`28`  $\mathrm{P}(X \le x) = {\tt pbinom}(x, n, \pi)$ (tt for “typewriter type”)  
-`29`  $P(A \mid B)$  
-`30`  $\mathrm{P}(A \mid B)$ (mathrm for “math roman font”  
-`31`  $\{1, 2, 3\}$  
-`32`  $\sin(x)$
-`33`  $\log(x)$  
-`34`  ∫ba $\int_{a}^{b}$  
-`35`  $\left(\int_{a}^{b} f(x) \; dx\right)$  
-`36`  $\left[\int_{-\infty}^{\infty} f(x) \; dx\right]$  
-`37`  $\left. F(x) \right|_{a}^{b}$  
-`38`  $\sum_{x = a}^{b} f(x)$  
-`39`  $\prod_{x = a}^{b} f(x)$  
-`40`  $\lim_{x \to \infty} f(x)$  
-`41`  $\displaystyle \lim_{x \to \infty} f(x)$  
-`42`  $ \ne $  
-`43` # Greek Letters  
-`44`  αA: $\alpha A$  
-νN $\nu N$  
-`45`  βB: $\beta B$  
-ξΞ $\xi\Xi$  
-`46`  γΓ: $\gamma \Gamma$  
-oO $o O$ (omicron)  
-`47`  δΔ: $\delta \Delta$  
-πΠ $\pi \Pi$  
-`48`  ϵεE: $\epsilon \varepsilon E$  
-ρϱP $\rho\varrho P$  
-`49`  ζZ: $\zeta Z \sigma \,\!$  
-Σ $\sigma \Sigma$  
-`50`  ηH: $\eta H$  
-τT $\tau T$  
-`51`  θϑΘ: $\theta \vartheta \Theta$  
-υΥ $\upsilon \Upsilon$  
-`52`  ιI: $\iota I$  
-ϕφΦ $\phi \varphi \Phi$  
-`53`  κK: $\kappa K$  
-χX $\chi X$  
-λΛ: $\lambda \Lambda$  
-ψΨ $\psi \Psi$  
-μM: $\mu M$  
-ωΩ $\omega \Omega$  
-
+`01  $\sum_{n=1}^{10} n^2$` $\sum_{n=1}^{10} n^2$  
+`02  ` 
+`03  $x = y $` $x = y $  
+`04  $x < y $` $x < y $  
+`05  $x > y $` $x > y $  
+`06  $x \le y $` $x \le y $  
+`07  $x \ge y $` $x \ge y $  
+`08  $x^{n}$` $x^{n}$  
+`09  $x_{n}$` $x_{n}$  
+`10  $\overline{x}$` $\overline{x}$  
+`11  $\hat{x}$` $\hat{x}$  
+`12  $\tilde{x}$` $\tilde{x}$  
+`13  $\frac{a}{b}$` $\frac{a}{b}$  
+`14  $\frac{\partial f}{\partial x}$` $\frac{\partial f}{\partial x}$  
+`15  $\displaystyle \frac{\partial f}{\partial x}$` $\displaystyle \frac{\partial f}{\partial x}$  
+`16  $\binom{n}{k}$` $\binom{n}{k}$  
+`17  $x_{1} + x_{2} + \cdots + x_{n}$` $x_{1} + x_{2} + \cdots + x_{n}$  
+`18  $x_{1}, x_{2}, \dots, x_{n}$` $x_{1}, x_{2}, \dots, x_{n}$  
+`19  $x=⟨x1,x2,…,xn⟩ \mathbf{x} = \langle x_{1}, x_{2}, \dots, x_{n}\rangle$` $x=⟨x1,x2,…,xn⟩ \mathbf{x} = \langle x_{1}, x_{2}, \dots, x_{n}\rangle$
+`20  $x \in A$` $x \in A$  
+`21  $|A|$` $|A|$  
+`22  $x \in A$` $x \in A$  
+`23  $x \subset B$` $x \subset B$  
+`24  $x \subseteq B$` $x \subseteq B$  
+`25  $A \cup B$` $A \cup B$  
+`26  $A \cap B$` $A \cap B$  
+`27  $X \sim {\sf Binom}(n, \pi)$ (sf for “slide font”)` $X \sim {\sf Binom}(n, \pi)$ (sf for “slide font”)  
+`28  $\mathrm{P}(X \le x) = {\tt pbinom}(x, n, \pi)$ (tt for “typewriter type”)` $\mathrm{P}(X \le x) = {\tt pbinom}(x, n, \pi)$ (tt for “typewriter type”)  
+`29  $P(A \mid B)$` $P(A \mid B)$  
+`30  $\mathrm{P}(A \mid B)$ (mathrm for “math roman font”` $\mathrm{P}(A \mid B)$ (mathrm for “math roman font”  
+`31  $\{1, 2, 3\}$` $\{1, 2, 3\}$  
+`32  $\sin(x)$` $\sin(x)$
+`33  $\log(x)$` $\log(x)$  
+`34  ∫ba $\int_{a}^{b}$` ∫ba $\int_{a}^{b}$  
+`35  $\left(\int_{a}^{b} f(x) \; dx\right)$` $\left(\int_{a}^{b} f(x) \; dx\right)$  
+`36  $\left[\int_{-\infty}^{\infty} f(x) \; dx\right]$` $\left[\int_{-\infty}^{\infty} f(x) \; dx\right]$  
+`37  $\left. F(x) \right|_{a}^{b}$` $\left. F(x) \right|_{a}^{b}$  
+`38  $\sum_{x = a}^{b} f(x)$` $\sum_{x = a}^{b} f(x)$  
+`39  $\prod_{x = a}^{b} f(x)$` $\prod_{x = a}^{b} f(x)$  
+`40  $\lim_{x \to \infty} f(x)$` $\lim_{x \to \infty} f(x)$  
+`41  $\displaystyle \lim_{x \to \infty} f(x)$` $\displaystyle \lim_{x \to \infty} f(x)$  
+`42 `
+`43 # Greek Letters`  Greek Letters  
+`44  αA: $\alpha A$ νN $\nu N$` αA: $\alpha A$ νN $\nu N$  
+`45  βB: $\beta B$ ξΞ $\xi\Xi$` βB: $\beta B$ ξΞ $\xi\Xi$  
+`46  γΓ: $\gamma \Gamma$ oO $o O$ (omicron)` γΓ: $\gamma \Gamma$ oO $o O$ (omicron)  
+`47  δΔ: $\delta \Delta$ πΠ $\pi \Pi$` δΔ: $\delta \Delta$ πΠ $\pi \Pi$  
+`48  ϵεE: $\epsilon \varepsilon E$ ρϱP $\rho\varrho P$` ϵεE: $\epsilon \varepsilon E$ ρϱP $\rho\varrho P$  
+`49  ζZ: $\zeta Z \sigma \,\!$ Σ $\sigma \Sigma$` ζZ: $\zeta Z \sigma \,\!$ Σ $\sigma \Sigma$  
+`50  ηH: $\eta H$ τT $\tau T$` ηH: $\eta H$ τT $\tau T$  
+`51  θϑΘ: $\theta \vartheta \Theta$ υΥ $\upsilon \Upsilon$` θϑΘ: $\theta \vartheta \Theta$ υΥ $\upsilon \Upsilon$  
+`52  ιI: $\iota I$ ϕφΦ $\phi \varphi \Phi$` ιI: $\iota I$ ϕφΦ $\phi \varphi \Phi$  
+`53  κK: $\kappa K$ χX $\chi X$ λΛ: $\lambda \Lambda$ ψΨ $\psi \Psi$ μM: $\mu M$ ωΩ $\omega \Omega$` κK: $\kappa K$ χX $\chi X$ λΛ: $\lambda \Lambda$ ψΨ $\psi \Psi$ μM: $\mu M$ ωΩ $\omega \Omega$
